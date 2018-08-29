@@ -1,0 +1,40 @@
+https://www.1keydata.com/pt/sql/sql-coalesce.php
+
+
+SQL > Linguagem SQL avançada > Função Coalesce
+A função COALESCE na linguagem SQL apresenta a primeira expressão não-NULL entre os seus argumentos.
+
+Passa-se o mesmo com a seguinte instrução CASE:
+
+SELECT CASE ("nome_coluna")
+  WHEN "expressão 1 is not NULL" THEN "expressão 1"
+  WHEN "expressão 2 is not NULL" THEN "expressão 2"
+  ...
+  [ELSE "NULL"]
+  END
+FROM "nome_tabela";
+Por exemplo, se tivermos a seguinte tabela,
+
+Tabela Contact_Info
+Name	Business_Phone	Cell_Phone	Home_Phone
+Jeff	531-2531	622-7813	565-9901
+Laura	NULL	772-5588	312-4088
+Peter	NULL	NULL	594-7477
+e quisermos descobrir a melhor forma de contactar cada pessoa de acordo com as seguintes regras:
+
+1. Se uma pessoa possuir um telefone da empresa, utilizar o número de telefone da empresa.
+
+2. Se uma pessoa não possuir um telefone da empresa e possuir um telemóvel, utilizar o número do telemóvel.
+
+3. Se uma pessoa não possuir um telefone da empresa, nem telemóvel, mas possuir telefone em casa, utilizar o número de telefone de casa.
+
+É possível utilizar a função COALESCE para atingir o objetivo:
+
+SELECT Name, COALESCE (Business_Phone, Cell_Phone, Home_Phone) Contact_Phone 
+FROM Contact_Info;
+Resultado:
+
+Name	Contact_Phone
+Jeff	531-2531
+Laura	772-5588
+Peter	594-7477
